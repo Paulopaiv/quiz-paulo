@@ -1,5 +1,6 @@
 package com.paulo.company.dto;
 
+import com.paulo.company.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserDTO {
+public class UserDTO  {
 
 
     private Long id;
