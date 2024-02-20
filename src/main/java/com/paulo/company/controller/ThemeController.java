@@ -1,7 +1,6 @@
 package com.paulo.company.controller;
 
 import com.paulo.company.dto.ThemeDTO;
-import com.paulo.company.model.Theme;
 import com.paulo.company.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/themes")
 public class ThemeController {
@@ -17,9 +17,9 @@ public class ThemeController {
     @Autowired
     private ThemeService themeService;
 
-    @PostMapping
-    public ResponseEntity<ThemeDTO> createTheme(@RequestBody Theme theme) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(themeService.onSave(theme));
+    @PostMapping("/save")
+    public ResponseEntity<ThemeDTO> createTheme(@RequestBody ThemeDTO themeDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(themeService.onSave(themeDTO));
     }
 
     @GetMapping
@@ -27,20 +27,14 @@ public class ThemeController {
         return ResponseEntity.ok(themeService.onListTheme());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<ThemeDTO> getThemeById(@PathVariable("id") Long id) {
-        return themeService.findTheme(id)
-                .map(theme -> ResponseEntity.ok(theme))
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok().body(themeService.findTheme(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTheme(@PathVariable("id") Long id) {
-        return themeService.findTheme(id)
-                .map(theme -> {
-                    themeService.onDelete(theme);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        themeService.findTheme(id);
+        return ResponseEntity.noContent().build();
     }
 }

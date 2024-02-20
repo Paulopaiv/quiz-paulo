@@ -1,7 +1,7 @@
 package com.paulo.company.service;
 
 
-
+import com.paulo.company.builder.ThemeMapper;
 import com.paulo.company.dto.ThemeDTO;
 import com.paulo.company.model.Theme;
 import com.paulo.company.repository.ThemeRepository;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ThemeService {
@@ -18,23 +17,26 @@ public class ThemeService {
     @Autowired
     private ThemeRepository themeRepository;
 
-    public ThemeDTO onSave(Theme themeDTO){
-        Theme theme = themeRepository.save(new Theme(themeDTO.getTheme(), themeDTO.getId()));
-        return new ThemeDTO(theme.getTheme(), theme.getId());
+    @Autowired
+    private ThemeMapper themeMapper;
+
+    public ThemeDTO onSave(ThemeDTO themeDTO) {
+        return themeMapper.toDTO(themeRepository.save(themeMapper.toEntity(themeDTO)));
     }
 
-    public void onDelete(ThemeDTO themeDTO){
-        themeRepository.deleteById(themeDTO.getId());
+    public void onDelete(ThemeDTO theme) {
+        Optional<Theme> optionalTheme = themeRepository.findById(theme.getId());
+        if (optionalTheme.isPresent()) {
+            themeRepository.delete(themeMapper.toEntity(theme));
+        }
     }
 
-    public List<ThemeDTO> onListTheme(){
-        return themeRepository.findAll().stream()
-                .map(theme -> new ThemeDTO(theme.getTheme(), theme.getId()))
-                .collect(Collectors.toList());
+    public List<ThemeDTO> onListTheme() {
+        return themeMapper.toListDTO(themeRepository.findAll());
     }
 
-    public Optional<ThemeDTO> findTheme(Long id){
-        return themeRepository.findById(id)
-                .map(theme -> new ThemeDTO(theme.getTheme(), theme.getId()));
+    public ThemeDTO findTheme(Long id) {
+        Optional<Theme> optionalTheme = themeRepository.findById(id);
+        return themeMapper.toDTO(optionalTheme.get());
     }
 }

@@ -1,20 +1,21 @@
 package com.paulo.company.dto;
 
-
-import com.paulo.company.model.Theme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class QuestionDTO {
 
-
     private Long id;
+    private String theme;
     private String question;
-    private Theme theme;
-
+    private List<AlternativeDTO> alternativeList;
 
 }
