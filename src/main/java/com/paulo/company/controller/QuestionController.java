@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class QuestionController {
 
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
 
     @GetMapping("{id}")
     public ResponseEntity<QuestionDTO> findQuestionById(@PathVariable Long id) throws Exception {
@@ -25,8 +25,10 @@ public class QuestionController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteQuestion(@PathVariable Long id){
+    public ResponseEntity<QuestionDTO> deleteQuestion(@PathVariable Long id) throws Exception {
+        questionService.deleteQuestion(questionService.findById(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
 
 }

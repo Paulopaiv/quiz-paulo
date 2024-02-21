@@ -1,5 +1,6 @@
 package com.paulo.company.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.paulo.company.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,8 @@ public class AlternativeDTO {
     private Boolean itsCorrect;
     private String alternative;
     private String referenceLetter;
-    private Question question;
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //private Question question;
 
 
 

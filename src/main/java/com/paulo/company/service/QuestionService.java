@@ -2,6 +2,7 @@ package com.paulo.company.service;
 
 import com.paulo.company.builder.QuestionMapper;
 import com.paulo.company.dto.QuestionDTO;
+import com.paulo.company.model.Question;
 import com.paulo.company.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class QuestionService {
         }
     }
 
-    public void deleteQuestion(Long id){
-        questionRepository.deleteById(id);
+    public void deleteQuestion(QuestionDTO questionDTO){
+        questionRepository.delete(questionMapper.toEntity(questionDTO));
     }
 
     public QuestionDTO findById(Long id) throws Exception {

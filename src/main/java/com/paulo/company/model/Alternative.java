@@ -1,15 +1,17 @@
 package com.paulo.company.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+@SequenceGenerator(name = "tb_alternativa_seq", allocationSize = 1)
 @Entity
 @Table(name = "tb_alternativa")
 public class Alternative {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_alternativa_seq")
 
-    @Column(name = "id")
+    @Column
     private Long id;
     @Column(name = "correta")
     private Boolean itsCorrect;
@@ -107,8 +109,8 @@ public class Alternative {
             return this;
         }
 
-        public Builder alternative(String alternative) {
-            alternative.startsWith(alternative);
+        public Builder alternative(String alternativeBuilder) {
+            alternative.setAlternative(alternativeBuilder);
             return this;
         }
 

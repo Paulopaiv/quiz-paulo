@@ -1,5 +1,6 @@
 package com.paulo.company.dto;
 
+import com.paulo.company.model.Theme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 public class QuestionDTO {
 
     private Long id;
-    private String theme;
+    private Theme theme;
     private String question;
     private List<AlternativeDTO> alternativeList;
 

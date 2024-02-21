@@ -1,11 +1,12 @@
 package com.paulo.company.model;
 
 import jakarta.persistence.*;
-
+import lombok.Builder;
 import java.util.ArrayList;
 import java.util.List;
 
 
+@Builder
 @SequenceGenerator(name = "tb_questao_seq", allocationSize = 1)
 @Entity
 @Table(name = "tb_questao")
@@ -13,6 +14,8 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_questao_seq")
+
+    @Column
     private Long id;
 
     @Column(name = "pergunta")
@@ -57,6 +60,9 @@ public class Question {
     }
 
     public void setAlternativeList(List<Alternative> alternativeList) {
+        for (Alternative alternative:alternativeList){
+            alternative.setQuestion(this);
+        }
         this.alternativeList = alternativeList;
     }
 
@@ -69,42 +75,6 @@ public class Question {
     }
 
 
-    public static final class Builder {
-        private Question question;
-
-        private Builder() {
-            question = new Question();
-        }
-
-        public static Builder aQuestion() {
-            return new Builder();
-        }
-
-        public Builder id(Long id) {
-            question.setId(id);
-            return this;
-        }
-
-        public Builder question(String question) {
-            this.question.setQuestion(question);
-            return this;
-        }
-
-        public Builder alternativeList(List<Alternative> alternativeList) {
-            question.setAlternativeList(alternativeList);
-            return this;
-        }
-
-        public Builder theme(Theme theme) {
-            question.setTheme(theme);
-            return this;
-        }
-
-        public Question build() {
-            return question;
-        }
-    }
-
     @Override
     public String toString() {
         return "Question{" +
@@ -114,4 +84,5 @@ public class Question {
                 ", theme=" + theme +
                 '}';
     }
+
 }

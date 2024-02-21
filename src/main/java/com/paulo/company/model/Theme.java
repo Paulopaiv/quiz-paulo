@@ -15,7 +15,7 @@ public class Theme {
     @Column(name = "tema")
     private String theme;
 
-    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "theme", fetch = FetchType.EAGER)
     @Column(name = "questoes")
     private List<Question> questions = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class Theme {
         return "Theme{" +
                 "id=" + id +
                 ", theme='" + theme + '\'' +
-                ", questions=" + questions +
+//                ", questions=" + questions +
                 '}';
     }
 
